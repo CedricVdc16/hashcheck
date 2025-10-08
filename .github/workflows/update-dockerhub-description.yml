@@ -1,0 +1,22 @@
+name: Update Docker Hub description
+
+on:
+  workflow_dispatch:
+  push:
+    paths: ["README.md"]
+
+jobs:
+  update-description:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update description on Docker Hub
+        uses: peter-evans/dockerhub-description@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}   # ex: cedricvdc16 (minuscules)
+          password: ${{ secrets.DOCKERHUB_TOKEN }}      # ton Access Token Docker Hub (Read/Write/Delete)
+          repository: cedricvdc16/hashcheck
+          readme-filepath: README.md
+
